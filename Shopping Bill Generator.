@@ -1,0 +1,59 @@
+
+def calculate_discount(subtotal):
+    if subtotal >= 5000:
+        return subtotal * 0.10
+    elif subtotal >= 2000:
+        return subtotal * 0.05
+    else:
+        return 0
+
+
+def calculate_tax(amount):
+    return amount * 0.05
+
+
+def generate_bill():
+    products = []
+    n = int(input("Enter number of products: "))
+
+    for i in range(n):
+        print("\nProduct", i + 1)
+        name = input("Enter product name: ")
+        quantity = int(input("Enter quantity: "))
+        price = float(input("Enter price: "))
+
+        if quantity <= 0 or price < 0:
+            print("Invalid quantity or price!")
+            return
+
+        products.append({
+            "name": name,
+            "quantity": quantity,
+            "price": price
+        })
+
+    subtotal = 0
+
+    print("\n========== SHOPPING BILL ==========")
+    print(f"{'Product':<15}{'Qty':<8}{'Price':<10}{'Total'}")
+
+    for p in products:
+        total = p["quantity"] * p["price"]
+        subtotal += total
+        print(f"{p['name']:<15}{p['quantity']:<8}{p['price']:<10.2f}{total:.2f}")
+
+    discount = calculate_discount(subtotal)
+    taxable_amount = subtotal - discount
+    tax = calculate_tax(taxable_amount)
+    final_amount = taxable_amount + tax
+
+    print("-----------------------------------")
+    print(f"Subtotal:        Rs. {subtotal:.2f}")
+    print(f"Discount:        Rs. {discount:.2f}")
+    print(f"Tax (5%):        Rs. {tax:.2f}")
+    print("-----------------------------------")
+    print(f"Final Amount:    Rs. {final_amount:.2f}")
+    print("===================================")
+
+
+generate_bill()
